@@ -5,11 +5,7 @@ date: "2017/4/27"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
-install.packages("plotly")
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
 library(plotly)
 df <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/2011_us_ag_exports.csv")
 df$hover <- with(df, paste(state, '<br>', "Beef", beef, "Dairy", dairy, "<br>",
@@ -25,7 +21,7 @@ g <- list(
   lakecolor = toRGB('white')
 )
 
-p <- plot_geo(df, locationmode = 'USA-states') %>%
+map <- plot_geo(df, locationmode = 'USA-states') %>%
   add_trace(
     z = ~total.exports, text = ~hover, locations = ~code,
     color = ~total.exports, colors = 'Purples'
@@ -36,7 +32,10 @@ p <- plot_geo(df, locationmode = 'USA-states') %>%
     geo = g
   )
 
-# Create a shareable link to your chart
-# Set up API credentials: https://plot.ly/r/getting-started
-chart_link = plotly_POST(p, filename="choropleth/ag")
-chart_link
+```
+
+# Interactive Map
+
+This is an interactive map made with Plotly (taken from the [documentation](https://plot.ly/r/choropleth-maps/))
+
+`r map`.
